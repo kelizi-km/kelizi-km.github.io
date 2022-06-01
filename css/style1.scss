@@ -1,0 +1,784 @@
+// import google font
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap');
+
+* {
+    font-family: 'Roboto', sans-serif; //Here use the font-family imported form google(above)
+    margin: 0;
+    padding: 0; //Always set margin and padding of the whole page (*) to zero, except you have another idea
+    box-sizing: border-box; //border or padding will not add length to w and h
+    outline: none;
+    border: none;
+    text-decoration: none;
+    text-transform: capitalize; //ALL text
+}
+
+//Pre-set up the color here for later use, it is sass feature.
+$black: #17202A;
+$white: #FDFEFE;
+$blue: #7FB3D5;
+$pink: #f8daf5;
+$yellow: #F7DC6F;
+$border: .2rem solid $black; //can Pre-set up the style of border too. 
+
+@mixin grid($val) {
+    //I think this is an advance way to write grid layout
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax($val, 1fr));
+    gap: 1.5rem;
+}
+
+html {
+    font-size: 65%;
+    overflow-x: hidden; //The text/or image that overflow the border (in x axis) will now be hidden.
+    /*https://developer.mozilla.org/zh-CN/docs/Web/CSS/overflow-x*/
+    // https://www.youtube.com/watch?v=5iM8BbX4eL0&loop=0
+    scroll-behavior: smooth;
+    scroll-padding-top: 7rem;
+
+    &::-webkit-scrollbar {
+        width: 1.5rem;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: $yellow;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: $black;
+    }
+
+}
+
+section {
+    padding: 5rem 9%; //Padding of topbottom is 5 rem, leftright is 9%
+}
+
+
+
+
+
+
+
+
+
+.header {
+    position: sticky; // Stick to the top, even scroll
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000; //Front of everything
+    display: flex; //use flex layout
+    align-items: center; //not much difference
+    // justify-content:center;  //element fo to middle 
+    // justify-content: flex-start; //all go to left
+    justify-content: space-between; //no space in the border but only equal space between the elements (logo, navbar and join us btn)
+    background: white;
+    box-shadow: 0rem .5rem 1rem rgba(0, 0, 0, .1);
+    padding: 2rem 9%;
+
+    .logo {
+        font-size: 2.5rem;
+        color: $black;
+        font-weight: bold;
+    }
+
+    .navbar a {
+        margin: 0 1rem;
+        font-size: 1.7rem;
+        color: black;
+
+        &:hover {
+            text-decoration: underline;
+        }
+
+    }
+
+    .btn {
+        margin-top: 0;
+    }
+}
+
+.heading {
+    text-align: center;
+    margin-bottom: 3rem;
+
+    span {
+        font-size: 2.5rem;
+    }
+
+    h1 {
+        font-size: 4rem;
+        padding-top: 0.5rem;
+    }
+}
+
+.btn {
+    display: inline-block;
+    margin-top: 1rem; //margin-top Doesn't change even if I change the value
+    padding: 1rem 3rem; //the btn goes bigger or smaller base on the font-size inside the btn
+    font-size: 2rem;
+    color: $white;
+    background: $black;
+    border: $border;
+    cursor: pointer;
+    font-weight: bolder;
+    border-radius: 0.5rem; //round corner
+
+    &:hover {
+        //when hover
+        background: none;
+        color: $black
+    }
+
+}
+
+.line-down {
+    position: relative;
+    z-index: 0;
+
+    &::before {
+        //add pseudo-element
+        content: '';
+        position: absolute;
+        bottom: .5rem;
+        left: 0;
+        right: 0;
+        height: 100%;
+        width: 100%;
+        background: $blue;
+        z-index: -1;
+        clip-path: polygon(0 80%, 100% 75%, 100% 100%, 0% 100%);
+
+    }
+
+}
+
+
+#menu-btn {
+    cursor: pointer; //Yes, must use this
+    font-size: 3rem; //Bigger look better 
+    display: none; //Doesn't display unless specify in media queries(appropriate width)
+}
+
+
+
+@keyframes floating {
+
+    0%,
+    100% {
+        transform: translateY(0rem);
+    }
+
+    50% {
+        transform: translateY(-4rem);
+    }
+}
+
+@keyframes fadeUp {
+    0% {
+        opacity: 0;
+        transform: translateY(4rem);
+    }
+
+}
+
+.home {
+    //home is the whole home section
+    //vh is viewheight, it will change follow the height of window
+    // flex-wrap: wrap-reverse; //reverse only when it change line
+    //items will change line automatically
+    //Gap :space between the 2 div inside .home
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    background: $pink ;
+
+    .image {
+        flex: 1 1 42rem; //flex-grow|flex-shrink|flex_basis
+        margin-top: 0rem;
+
+        img {
+            width: 100%;
+            animation: floating 4s linear infinite; //has to use @keyframes for animation to know the position it's going to.Put keyframes in outermost layer.
+        }
+    }
+
+    .content {
+        flex: 1 1 42rem;
+
+        h3 {
+            font-size: 6rem;
+            font-weight: bolder;
+        }
+
+        p {
+            word-wrap: break-word;
+            font-size: 2rem;
+            padding: 1rem 0;
+            line-height: 2;
+        }
+    }
+}
+
+.services {
+    background: $pink;
+
+    .box-container {
+        @include grid(32rem); //use the defined grid layout here
+
+        .box {
+            background: $white;
+            padding: 3rem 2rem;
+            text-align: center;
+            border-radius: .5rem;
+
+            img {
+                height: 8rem;
+                margin-bottom: .7rem;
+            }
+
+            h3 {
+                font-size: 2.2rem;
+                padding: 1.5rem 0;
+            }
+
+            p {
+                line-height: 2;
+                font-size: 2rem;
+            }
+        }
+    }
+}
+
+.about {
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap; //so important
+    gap: 0rem; //gap between 2 div under about
+
+    .image {
+        flex: 1 1 42rem;
+
+        img {
+            width: 100%;
+        }
+
+    }
+
+    .content {
+        flex: 1 1 42rem;
+
+        h3 {
+            font-size: 4rem;
+            line-height: 1.5;
+        }
+
+        p {
+            font-size: 1.5rem;
+            line-height: 2;
+            padding: 1rem 0;
+        }
+
+    }
+}
+
+.steps {
+    background: $blue;
+
+    .box-container {
+        //use the defined grid layout here
+        @include grid(32rem);
+
+        .box {
+            text-align: center;
+            padding: 3rem 2rem;
+
+            img {
+                height: 20rem;
+            }
+
+            h3 {
+                font-size: 2.3rem;
+                padding: 2rem;
+            }
+
+            p {
+                font-size: 1.7rem;
+                line-height: 2;
+            }
+
+        }
+    }
+
+
+
+}
+
+
+
+
+
+
+
+.features {
+    .box-container .box {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        align-items: center; //x and y both center
+        min-height: 50vh;
+        margin-bottom: 3rem 0;
+
+        &:last-child() {
+            margin-bottom: 0;
+        }
+
+        &:nth-child(even) {
+            flex-flow: row-reverse wrap; //nice, a special layout
+        }
+
+        .image {
+            flex: 1 1 42rem;
+
+
+            img {
+                width: 100%;
+            }
+        }
+
+        .content {
+            flex: 1 1 42rem;
+
+            h3 {
+                font-size: 3rem;
+                line-height: 1.5;
+            }
+
+            p {
+                font-size: 1.5rem;
+                line-height: 2;
+                padding: 1rem 0;
+            }
+        }
+    }
+}
+
+.pricing {
+    background: $pink;
+    text-align: center; //all align center
+
+    .price-toggler {
+        display: inline-block;
+        border-radius: .5rem;
+        padding: 0.5rem;
+        margin-bottom: 3rem;
+        background: $white;
+        border: $border;
+
+        span {
+            display: inline-block;
+            padding: 1rem 3rem;
+            font-weight: bolder;
+            font-size: 1.7rem;
+            cursor: pointer;
+            color: $black;
+            border-radius: .3rem;
+
+
+            &.active {
+                background: $blue;
+                color: $white;
+            }
+        }
+
+    }
+
+    .box-container {
+        @include grid(32rem);
+
+        .box {
+            padding: 3rem 2rem;
+            border-radius: .5rem;
+            background: $white;
+
+
+            &:nth-child(odd) {
+                border: $border;
+
+                h3 {
+                    background: $pink;
+                }
+            }
+        }
+
+        h3 {
+            font-size: 2rem;
+            display: inline-block;
+            border-radius: 0.5rem;
+            padding: 0.5rem 1.5rem;
+            background: $blue;
+            margin-bottom: 1rem;
+        }
+
+        .price {
+            padding: 2rem 0;
+
+            .month,
+            .year {
+                font-size: 5rem;
+                animation: fadeUp .2s linear backwards;
+
+                span {
+                    font-size: 3rem;
+                }
+
+            }
+
+            .year {
+                display: none; //hide the price if yearly until toggle
+            }
+        }
+
+        .list {
+            padding: 1.5rem 0;
+
+            p {
+                padding: 1.5rem 0;
+
+                font-size: 1.7rem;
+
+                i {
+                    padding-right: 0.5rem;
+                }
+            }
+        }
+    }
+}
+
+.reviews {
+    .slide-container {
+
+
+        .slide {
+            text-align: center;
+            max-width: 60rem;
+            margin: 1rem auto;
+            display: none; //again, hide all the designer except active
+
+            &.active {
+                display: block;
+            }
+
+            img {
+                height: 10rem;
+                width: 10rem;
+                border-radius: 50%;
+                object-fit: cover;
+                animation: fadeUp .2s linear .3s backwards;
+            }
+
+            p {
+                padding: 1rem 0;
+                font-size: 2rem;
+                line-height: 2;
+                animation: fadeUp .2s linear .4s backwards;
+            }
+
+            h3 {
+                padding-bottom: .7rem;
+                font-size: 2rem;
+                animation: fadeUp .2s linear .5s backwards;
+            }
+
+            span {
+                font-size: 1.5rem;
+                display: block;
+                animation: fadeUp .2s linear .6s backwards;
+            }
+        }
+    }
+
+    .controls {
+        margin-top: 2rem;
+        text-align: center;
+
+        div {
+            font-size: 3rem;
+            cursor: pointer;
+            margin: 0 7rem;
+
+            &:hover {
+                transform: scale(1.5);
+            }
+        }
+    }
+
+}
+
+
+.faq {
+    background: $blue;
+
+
+    .accordion-container {
+        margin: 1rem auto;
+        max-width: 71rem;
+
+        .accordion {
+            margin: 1rem 0;
+            background-color: #fff;
+            border-radius: .5rem;
+
+            &.active {
+                .accordin-content {
+                    display: block;
+                }
+
+                .accordion-heading i{
+                    transform: rotate(180deg);
+                }
+            }
+
+            .accordion-heading {
+                display: flex;
+                padding: 2rem;
+                align-items: center;
+                justify-content: space-between;
+                gap: 1rem;
+                cursor: pointer;
+
+                h3 {
+                    font-size: 2.2rem;
+                    line-height: 1.5;
+                }
+
+                i {
+                    //the fa-solid fa-angles-down
+                    font-size: 2rem;
+                    transition: .2s linear;
+
+                }
+            }
+
+            .accordin-content {
+                font-size: 2rem;
+                padding: 2rem 2REM;
+                padding-top: 0;
+                line-height: 2;
+                display: none; //no display until clicked
+                animation: fadeUp .2s linear;
+            }
+        }
+    }
+}
+
+.newsletter {
+    .content{
+        text-align: center;
+        max-width: 60rem;
+        margin: 1rem auto;
+
+        h3 {
+            font-size: 3rem;
+            margin-bottom:  1rem 0;
+
+        }
+        p{
+            padding:1rem 0;
+            line-height: 2;
+            font-size:1.7rem;
+
+            a {
+                color:$black;
+
+                &:hover{
+                    text-decoration: underline;
+                }
+
+            }
+
+        }
+
+        form{
+            display: flex;
+            border: $border;
+            border-radius: .5rem;
+            padding:.5rem;
+            margin: 1rem 0;
+
+            .email {
+                width: 100%;
+                padding: 1rem 1.5rem;
+                font-size: 1.7rem;
+                text-transform: none;
+            }
+            .btn {
+                margin-top: 0; //where does the margin-top comes from??? ok, set it to zero
+            }
+
+
+        }
+
+
+    }
+}
+
+
+.footer{
+    background: $pink;
+
+    .box-container {  //Grid-display in this section
+        @include grid(25rem);
+
+        .box{
+            h3{
+                font-size:2.2rem;
+                padding:1rem 0;
+            }
+
+            a{
+                font-size: 2rem;
+                color: $black;
+                display: block;
+                padding: 1rem 0;
+
+                &:hover{
+                    text-decoration: underline;
+                     
+                }
+            }
+
+            
+        }
+    }
+
+    .credit  {
+        text-align: center;
+        padding: 1rem ;
+        margin-top: 2rem;
+        font-size: 1.5rem;
+
+
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// media queries 
+@media (max-width:1200px) {
+    .header {
+        padding: 2rem;
+    }
+
+    section {
+        padding: 3rem 2rem;
+    }
+
+    .home .content h3 {
+        font-size: 4rem;
+    }
+
+}
+
+@media (max-width:991px) {
+
+    html {
+        font-size: 55%; //Make the font smaller so they can fit in smaller window without going to another row
+    }
+
+}
+
+@media (max-width:768px) {
+
+    #menu-btn {
+        display: inline-block;
+        transition: .2s linear;
+
+        &.fa-fire {
+            transform: rotate(180deg);
+        }
+    }
+
+    .header {
+
+        .btn {
+            //hide the btn (Join Us) here in 768px)
+            display: none;
+        }
+
+        .navbar {
+            position: absolute; //(Under 768px) when set the position absolute to top 99% (of the htight of navbar), 99% go under the header, 1% is stay inside the header, technically its still inside the header, but it looks like its under the header(I guess).
+            top: 99%;
+            left: 0;
+            right: 0;
+            border-top: $border; //Add a black line top of the nav bar
+            background: $white;
+            clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+            //Got this polygon value in CSS clip-path maker, hide the navbar (except triggered)
+            transition: .2s linear; //Amination when show up and hiding
+
+
+            // The navbar was hidden, now it show it original layout when #menu-btn is clicked
+            &.active {
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            }
+
+            a {
+                display: block; //(Under 768pxpx) Changed to block display so every (a) element would occupy the whole row, so they (a) line up from top to bottom.
+                margin: 0;
+                padding: 1.5rem 2rem; //Add padding for each block (a).
+            }
+        }
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width:450px) {
+    html {
+        font-size: 50%;
+    }
+
+    .heading h1 {
+        font-size: 3rem;
+    }
+}
